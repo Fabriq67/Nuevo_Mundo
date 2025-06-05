@@ -1,36 +1,42 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
-  const [open, setOpen] = useState(false);
-
   return (
-    <header className="bg-black text-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-red-500">Códice Chugchilán</h1>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div className="container-fluid px-4 d-flex justify-content-between align-items-center">
+        <NavLink className="navbar-brand fw-bold text-warning fs-4" to="/">
+          Códice Chugchilán
+        </NavLink>
         <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden focus:outline-none"
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <nav className={`md:flex gap-6 ${open ? 'block' : 'hidden'} md:block`}>          
-          <Link to="/" className="hover:text-red-400 transition">Inicio</Link>
-          <Link to="/cultura" className="hover:text-red-400 transition">Cultura</Link>
-          <Link to="/comidas" className="hover:text-red-400 transition">Comidas</Link>
-          <Link to="/actividades" className="hover:text-red-400 transition">Actividades</Link>
-          <Link to="/realidad" className="hover:text-red-400 transition">Realidad</Link>
-        </nav>
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav d-flex flex-row gap-3">
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/">Inicio</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/cultura">Cultura</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/comidas">Comidas</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/actividades">Actividades</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link text-white" to="/realidad">Realidad</NavLink>
+            </li>
+          </ul>
+        </div>
       </div>
-    </header>
+    </nav>
   );
 }
 
