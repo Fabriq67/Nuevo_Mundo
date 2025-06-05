@@ -1,5 +1,11 @@
 import React from 'react';
-import '../App.css'; // asegúrate que exista y esté enlazado a Bootstrap
+import '../App.css';
+
+// ✅ Importa las imágenes
+import imgHistoria from '../assets/images/historia.jpg';
+import imgCultura from '../assets/images/cultura.jpg';
+import imgTurismo from '../assets/images/turismo.jpg';
+
 
 function Inicio() {
   const datos = [
@@ -7,19 +13,19 @@ function Inicio() {
       titulo: '📜 Historia y legado',
       texto:
         'Fundada el 29 de septiembre de 1861, Chugchilán ha sido un eje cultural entre la Costa y la Sierra. Antes parte de Pujilí, se unió a Sigchos en 1992. Su historia refleja la fuerza de una parroquia resiliente, comercial y llena de tradiciones.',
-      imagen: '/images/historia.jpg',
+      imagen: imgHistoria,
     },
     {
       titulo: '🎭 Cultura viva',
       texto:
         'La mayoría de la población es indígena Kichwa. Las tradiciones se manifiestan en su ropa, comida y festividades. La globalización y migración ponen en riesgo su preservación.',
-      imagen: '/images/cultura.jpg',
+      imagen: imgCultura,
     },
     {
       titulo: '🧭 Turismo y naturaleza',
       texto:
         'Rodeado de paisajes andinos, Chugchilán está cerca de la laguna de Quilotoa. A 2.860 msnm ofrece rutas ecológicas, miradores y experiencias auténticas.',
-      imagen: '/images/turismo.jpg',
+      imagen: imgTurismo,
     },
   ];
 
@@ -27,10 +33,9 @@ function Inicio() {
     <div className="container py-5">
       <div className="text-center mb-5">
         <h1 className="fw-bold display-5 text-gradient">🌄 Bienvenido a Nuevo Mundo</h1>
-       <p className="subtitle text-center">
-  Descubre las raíces, cultura y realidad de <strong>Chugchilán</strong> a través de fichas vivas, imágenes reales y generación de contenido cultural.
-</p>
-
+        <p className="subtitle text-center">
+          Descubre las raíces, cultura y realidad de <strong>Chugchilán</strong> a través de fichas vivas, imágenes reales y generación de contenido cultural.
+        </p>
       </div>
 
       <div className="row g-4">
@@ -52,9 +57,9 @@ function Inicio() {
         ))}
       </div>
 
-     <footer className="text-center text-light mt-5 pt-3 pb-4 small">
-  Hecho con <span className="text-danger">❤️</span> para preservar la identidad de los pueblos.
-</footer>
+      <footer className="text-center text-light mt-5 pt-3 pb-4 small">
+        Hecho con <span className="text-danger">❤️</span> para preservar la identidad de los pueblos.
+      </footer>
     </div>
   );
 }
