@@ -1,9 +1,10 @@
-// === BACKEND (server.js o index.js) ===
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
-const app = express();
+const fetch = require('node-fetch');
+require('dotenv').config();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -15,7 +16,7 @@ app.get('/api/personas', (req, res) => {
   });
 });
 
-// Obtener entrevistas
+// Obtener entrevistas por persona
 app.get('/api/personas/:id/entrevistas', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM entrevistas WHERE persona_id = ?', [id], (err, result) => {
@@ -24,7 +25,7 @@ app.get('/api/personas/:id/entrevistas', (req, res) => {
   });
 });
 
-// Obtener multimedia
+// Obtener multimedia por entrevista
 app.get('/api/entrevistas/:id/multimedia', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM multimedia WHERE entrevista_id = ?', [id], (err, result) => {
@@ -33,47 +34,58 @@ app.get('/api/entrevistas/:id/multimedia', (req, res) => {
   });
 });
 
-// Generar historia compleja y procedural
-app.post('/api/generar-historia', (req, res) => {
+app.post('/api/generar-historia', async (req, res) => {
   const { parroquia, tema } = req.body;
-  console.log('👉 Recibido:', parroquia, tema);
 
-  if (!parroquia || !tema || parroquia.trim() === '' || tema.trim() === '') {
-    return res.status(400).json({ error: 'Parroquia y tema son requeridos.' });
+  if (!parroquia || !tema) {
+    return res.status(400).json({ error: 'Faltan datos.' });
   }
 
-  const generarHistoriaCompleja = (parroquia, tema) => {
-    const inicios = [
-      `En la mítica tierra de ${parroquia}, donde las montañas hablan y los ríos cantan,`,
-      `Desde los albores del tiempo en ${parroquia}, las estrellas susurraban sobre ${tema}.`,
-      `Cuentan los abuelos que en ${parroquia}, el alma del pueblo se tejía con ${tema}.`,
-    ];
+  const prompt = `Eres un sabio narrador andino. Escribe una historia corta, ancestral y poética inspirada en la parroquia de ${parroquia}, sobre el tema: "${tema}".`;
 
-    const conflictos = [
-      `${tema} fue casi olvidado cuando la modernidad tocó las puertas de la comunidad.`,
-      `Durante la colonización, ${tema} fue prohibido, pero sobrevivió en secreto.`,
-      `${tema} fue desafiado por nuevas generaciones que no comprendían su valor.`,
-    ];
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer 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',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'mistralai/mistral-7b-instruct',
+        messages: [
+          { role: 'system', content: 'Eres un narrador cultural andino que escribe relatos breves con sabiduría ancestral.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 200
+      })
+    });
 
-    const acciones = [
-      `Los sabios lo escondieron en canciones, bordados y rituales ancestrales.`,
-      `Se transmitió a través de leyendas contadas bajo la luna llena.`,
-      `Fue rescatado en una fiesta en honor a la tierra, donde el pueblo se unió una vez más.`,
-    ];
+    const data = await response.json();
+    const texto = data.choices?.[0]?.message?.content;
 
-    const finales = [
-      `Hoy, ${tema} resurge con fuerza en las voces y pasos de las nuevas generaciones.`,
-      `El códice de ${parroquia} lo guarda con celo, para nunca volver a perderlo.`,
-      `Y así, ${tema} sigue vivo en cada gesto, cada palabra, cada mirada.`,
-    ];
+    if (!texto) {
+      console.error('❌ La IA no devolvió texto:', data);
+      return res.status(500).json({ historia: 'La IA no generó respuesta. Intenta nuevamente.' });
+    }
 
-    const rand = arr => arr[Math.floor(Math.random() * arr.length)];
-    return `${rand(inicios)} ${rand(conflictos)} ${rand(acciones)} ${rand(finales)}`;
-  };
+    res.json({ historia: texto });
 
-  const historia = generarHistoriaCompleja(parroquia, tema);
-  res.json({ historia });
+  } catch (error) {
+    console.error('❌ Error con OpenRouter:', error);
+    res.status(500).json({ historia: 'Fallo al generar historia con IA.' });
+  }
 });
 
+
+// Arrancar servidor
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log(`✅ Servidor corriendo en puerto ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
+});
+
+const comidasRoutes = require('./comidas');
+app.use('/api', comidasRoutes);
+
+const chatRoutes = require('./chat');
+app.use('/api', chatRoutes);

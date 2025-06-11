@@ -1,0 +1,33 @@
+.custom-navbar {
+  background: rgba(20, 20, 20, 0.75);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+.custom-link {
+  color: #ddd !important;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.custom-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: #28a745;
+  bottom: -4px;
+  left: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.custom-link:hover::after,
+.custom-link.active::after {
+  width: 100%;
+}
+
+.custom-link:hover {
+  color: #fff !important;
+}

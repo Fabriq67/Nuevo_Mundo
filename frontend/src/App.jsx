@@ -3,8 +3,8 @@ import Navbar from './pages/Navbar';
 import Inicio from './pages/Inicio';
 import Cultura from './pages/Cultura';
 import Comidas from './pages/Comidas';
-import Actividades from './pages/Actividades';
 import Realidad from './pages/Realidad';
+import Chat from './pages/Chat'; // Asegúrate de que el archivo y la ruta son correctas
 
 
 
@@ -19,8 +19,8 @@ function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/cultura" element={<Cultura />} />
         <Route path="/comidas" element={<Comidas />} />
-        <Route path="/actividades" element={<Actividades />} />
         <Route path="/realidad" element={<Realidad />} />
+        <Route path="/chat" element={<Chat />} /> 
       </Routes>
     </>
   );
