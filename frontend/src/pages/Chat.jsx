@@ -5,12 +5,15 @@ function Chat() {
   const [pregunta, setPregunta] = useState('');
   const [respuesta, setRespuesta] = useState('');
 
+  const API = import.meta.env.VITE_API_URL; // ✅ Usamos la URL de producción
+
   const manejarPregunta = async () => {
     try {
-      const res = await axios.post('http://localhost:3001/api/chatbot', { pregunta });
+      const res = await axios.post(`${API}/api/chatbot`, { pregunta });
       setRespuesta(res.data.respuesta);
     } catch (error) {
       setRespuesta('Error al conectar con el servidor 😕');
+      console.error('❌ Error en la petición al backend:', error);
     }
   };
 
@@ -25,7 +28,9 @@ function Chat() {
           value={pregunta}
           onChange={(e) => setPregunta(e.target.value)}
         />
-        <button className="btn btn-success" onClick={manejarPregunta}>Preguntar</button>
+        <button className="btn btn-success" onClick={manejarPregunta}>
+          Preguntar
+        </button>
         {respuesta && (
           <div className="alert alert-info mt-3">{respuesta}</div>
         )}
