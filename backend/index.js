@@ -13,10 +13,14 @@ app.use(express.json());
 // RUTA: Obtener personas
 app.get('/api/personas', (req, res) => {
   db.query('SELECT * FROM personas', (err, result) => {
-    if (err) return res.status(500).json({ error: 'Error al obtener personas' });
+    if (err) {
+      console.error("❌ ERROR AL CONECTAR CON DB:", err); // 👈 Esto imprime el error real
+      return res.status(500).json({ error: 'Error al obtener personas' });
+    }
     res.json(result);
   });
 });
+
 
 // RUTA: Obtener entrevistas por persona
 app.get('/api/personas/:id/entrevistas', (req, res) => {
