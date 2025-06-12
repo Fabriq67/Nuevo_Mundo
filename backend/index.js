@@ -98,7 +98,8 @@ app.listen(PORT, () => {
 });
 
 const cors = require('cors');
-
 app.use(cors({
-  origin: 'https://cultura.vinculaciontaytachugchilan.org' // 👈 tu frontend
+  origin: 'https://cultura.vinculaciontaytachugchilan.org',
+  methods: ['GET', 'POST'],
+  credentials: true
 }));
