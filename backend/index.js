@@ -7,7 +7,11 @@ const db = require('./db');
 const fetch = require('node-fetch');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://cultura.vinculaciontaytachugchilan.org',
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(express.json());
 
 // RUTA: Obtener personas
@@ -97,9 +101,3 @@ app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en puerto ${PORT}`);
 });
 
-const cors = require('cors');
-app.use(cors({
-  origin: 'https://cultura.vinculaciontaytachugchilan.org',
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
