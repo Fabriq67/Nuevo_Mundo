@@ -8,11 +8,13 @@ function Comidas() {
   const [leyenda, setLeyenda] = useState('');
   const [cargando, setCargando] = useState(false);
 
+  const API = import.meta.env.VITE_API_URL; // Usar variable de entorno
+
   useEffect(() => {
-    axios.get('http://localhost:3001/api/comidas')
+    axios.get(`${API}/api/comidas`)
       .then(res => setPlatos(res.data))
       .catch(err => console.error('❌ Error al cargar comidas:', err));
-  }, []);
+  }, [API]);
 
   const generarLeyenda = async () => {
     if (!seleccionado) return;
@@ -21,7 +23,7 @@ function Comidas() {
     setLeyenda('');
 
     try {
-      const res = await axios.post('http://localhost:3001/api/comidas/leyenda', {
+      const res = await axios.post(`${API}/api/comidas/leyenda`, {
         nombre: seleccionado.nombre,
         descripcion: seleccionado.descripcion
       });
@@ -55,7 +57,6 @@ function Comidas() {
         ))}
       </div>
 
-      {/* Modal de detalle */}
       {seleccionado && (
         <div className="modal-ficha">
           <div className="modal-content-ficha">

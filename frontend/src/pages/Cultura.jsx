@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Cultura.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Cultura() {
   const [personas, setPersonas] = useState([]);
   const [seleccionado, setSeleccionado] = useState(null);
@@ -9,9 +11,9 @@ function Cultura() {
   const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/personas')
+    axios.get(`${API_BASE_URL}/api/personas`)
       .then(res => setPersonas(res.data))
-      .catch(err => console.error('Error al cargar personas:', err));
+      .catch(err => console.error('❌ Error al cargar personas:', err));
   }, []);
 
   const generarHistoriaIA = async () => {
@@ -20,7 +22,7 @@ function Cultura() {
     setHistoriaIA('');
 
     try {
-      const response = await axios.post('http://localhost:3001/api/generar-historia', {
+      const response = await axios.post(`${API_BASE_URL}/api/generar-historia`, {
         parroquia: 'Chugchilán',
         tema: seleccionado.descripcion || 'sabiduría ancestral'
       });
@@ -65,7 +67,6 @@ function Cultura() {
         ))}
       </div>
 
-      {/* Modal códice */}
       {seleccionado && (
         <div className="modal-ficha">
           <div className="modal-content-ficha">
