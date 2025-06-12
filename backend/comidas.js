@@ -25,7 +25,7 @@ router.post('/comidas/leyenda', async (req, res) => {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer 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',
+       'Authorization': 'Bearer ' + process.env.OPENROUTER_API_KEY,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

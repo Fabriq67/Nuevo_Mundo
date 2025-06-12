@@ -1,14 +1,16 @@
+require('dotenv').config(); // Cargar variables desde .env
+console.log("🔑 API KEY:", process.env.OPENROUTER_API_KEY); // Verifica que se esté leyendo
+
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
 const fetch = require('node-fetch');
-require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Obtener personas
+// RUTA: Obtener personas
 app.get('/api/personas', (req, res) => {
   db.query('SELECT * FROM personas', (err, result) => {
     if (err) return res.status(500).json({ error: 'Error al obtener personas' });
@@ -16,7 +18,7 @@ app.get('/api/personas', (req, res) => {
   });
 });
 
-// Obtener entrevistas por persona
+// RUTA: Obtener entrevistas por persona
 app.get('/api/personas/:id/entrevistas', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM entrevistas WHERE persona_id = ?', [id], (err, result) => {
@@ -25,7 +27,7 @@ app.get('/api/personas/:id/entrevistas', (req, res) => {
   });
 });
 
-// Obtener multimedia por entrevista
+// RUTA: Obtener multimedia por entrevista
 app.get('/api/entrevistas/:id/multimedia', (req, res) => {
   const { id } = req.params;
   db.query('SELECT * FROM multimedia WHERE entrevista_id = ?', [id], (err, result) => {
@@ -34,6 +36,7 @@ app.get('/api/entrevistas/:id/multimedia', (req, res) => {
   });
 });
 
+// RUTA: Generar historia IA
 app.post('/api/generar-historia', async (req, res) => {
   const { parroquia, tema } = req.body;
 
@@ -47,7 +50,7 @@ app.post('/api/generar-historia', async (req, res) => {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer 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',
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -77,15 +80,15 @@ app.post('/api/generar-historia', async (req, res) => {
   }
 });
 
-
-// Arrancar servidor
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
-});
-
+// Importar rutas adicionales
 const comidasRoutes = require('./comidas');
 app.use('/api', comidasRoutes);
 
 const chatRoutes = require('./chat');
 app.use('/api', chatRoutes);
+
+// Iniciar servidor
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
+});
