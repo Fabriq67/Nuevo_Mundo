@@ -4,12 +4,8 @@ import Inicio from './pages/Inicio';
 import Cultura from './pages/Cultura';
 import Comidas from './pages/Comidas';
 import Realidad from './pages/Realidad';
-import Chat from './pages/Chat'; // Asegúrate de que el archivo y la ruta son correctas
-
-
-
-export default App;
-
+import Chat from './pages/Chat'; // Página de chat manual, si la usas
+import ChatBot from './pages/ChatBot'; // ✅ El flotante siempre visible
 
 function App() {
   return (
@@ -20,8 +16,12 @@ function App() {
         <Route path="/cultura" element={<Cultura />} />
         <Route path="/comidas" element={<Comidas />} />
         <Route path="/realidad" element={<Realidad />} />
-        <Route path="/chat" element={<Chat />} /> 
+        <Route path="/chat" element={<Chat />} /> {/* Si es una página específica */}
       </Routes>
+
+      <ChatBot /> {/* ✅ SIEMPRE VISIBLE EN TODAS LAS PESTAÑAS */}
     </>
   );
 }
+
+export default App;

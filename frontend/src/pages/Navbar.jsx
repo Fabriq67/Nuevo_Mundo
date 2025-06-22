@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import './Navbar.css'; // Asegúrate de importar el nuevo CSS
+import './Navbar.css';
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
       <div className="container-fluid px-4 d-flex justify-content-between align-items-center">
-        <NavLink className="navbar-brand fw-bold text-warning fs-4" to="/">
-          Códice Chugchilán
+        <NavLink className="navbar-brand" to="/">
+          Codice Chugchilan 
         </NavLink>
         <button
           className="navbar-toggler"
@@ -18,7 +18,7 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul className="navbar-nav d-flex flex-row gap-3">
+          <ul className="navbar-nav d-flex flex-row">
             <li className="nav-item">
               <NavLink className="nav-link custom-link" to="/">Inicio</NavLink>
             </li>

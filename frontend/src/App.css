@@ -1,52 +1,131 @@
+/* --- Base --- */
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #0f0f0f;
-  color: #f5f5f5;
+  background: #0b0b0b;
+  color: #e0e0e0;
   margin: 0;
+  overflow-x: hidden;
 }
 
-.custom-card {
-  border: none;
-  border-radius: 1rem;
+/* --- Hero Título --- */
+.hero {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 4rem;
+  color: #fff;
+  text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  animation: fadeSlideDown 1.5s forwards;
+}
+
+.lead-sub {
+  display: inline-block;
+  margin-top: 15px;
+  font-style: italic;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 15px;
+  border-radius: 4px;
+  opacity: 0;
+  animation: fadeSlideDown 1.5s forwards;
+  animation-delay: 0.5s;
+}
+
+/* --- Paneles inclinados perfectos --- */
+.panels {
+  display: flex;
+  height: 100vh;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.custom-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 32px rgba(0, 255, 150, 0.2);
 }
 
-.card-title {
-  font-size: 1.2rem;
-  color: #d4edda;
-  font-family: 'Merriweather', serif;
+.panel {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+  transition: flex 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeInOneByOne 1s forwards;
 }
 
-.card-text {
-  font-size: 0.95rem;
-  color: #ccc;
-  font-family: 'Inter', sans-serif;
+.panel:nth-child(1) { animation-delay: 1s; }
+.panel:nth-child(2) { animation-delay: 1.5s; }
+.panel:nth-child(3) { animation-delay: 2s; }
+
+/* --- Hover intuitivo --- */
+.panel:hover {
+  filter: brightness(1.15);
+  transform: scale(1.03);
 }
 
-.text-underline {
-  text-decoration: underline;
-  text-decoration-color: #5cb85c;
+.panel.active {
+  flex: 3;
 }
 
-.btn-success {
-  background-color: #198754;
-  border: none;
+/* --- Overlay texto título ficha --- */
+.panel .overlay {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
-.btn-success:hover {
-  background-color: #157347;
+
+/* --- Detalle emergente --- */
+.detail {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px;
+  max-width: 400px;
+  z-index: 20;
+  animation: fadeSlideUp 1s forwards;
+}
+
+.detail button {
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 20px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.detail h2 {
+  font-family: 'Cinzel', serif;
+  margin-top: 0;
 }
 
 footer {
-  color: #aaa;
-  font-size: 0.9rem;
+  color: #888;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
 }
 
-.lead {
-  color: #ddd !important;
+/* --- Animaciones --- */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInOneByOne {
+  to { opacity: 1; }
 }
