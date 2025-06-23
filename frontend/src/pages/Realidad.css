@@ -1,0 +1,106 @@
+/* === CONTENEDOR GENERAL === */
+.timeline-container {
+  background: #f8f9fa;
+  padding: 50px 20px;
+}
+
+.timeline-title {
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111;
+}
+
+/* === LÍNEA === */
+.timeline-line {
+  position: relative;
+  margin: 0 auto;
+  width: 3px;
+  background: #000;
+  height: 100%;
+}
+
+/* === ITEM === */
+.timeline-item {
+  position: relative;
+  margin: 40px auto;
+  padding-left: 50px;
+  width: 90%;
+  max-width: 800px;
+}
+
+/* === PUNTO === */
+.timeline-dot {
+  position: absolute;
+  left: -12px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* === TARJETA === */
+.timeline-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* === IMAGEN === */
+.timeline-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* === TEXTO INTERIOR === */
+.timeline-text {
+  padding: 25px;
+}
+
+.timeline-text h3,
+.timeline-text h4,
+.timeline-text p {
+  color: #111 !important;   /* siempre negro */
+  opacity: 1 !important;    /* sin transparencia */
+}
+
+.timeline-text h3 {
+  margin: 0 0 5px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.timeline-text h4 {
+  margin: 0 0 10px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.timeline-text p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .timeline-item {
+    padding-left: 35px;
+  }
+  .timeline-dot {
+    left: -10px;
+    width: 16px;
+    height: 16px;
+  }
+}

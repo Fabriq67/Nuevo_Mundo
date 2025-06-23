@@ -7,7 +7,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
       <div className="container-fluid px-4 d-flex justify-content-between align-items-center">
         <NavLink className="navbar-brand" to="/">
-          Codice Chugchilan 
+          Codice Chugchilan
         </NavLink>
         <button
           className="navbar-toggler"
@@ -31,6 +31,12 @@ function Navbar() {
             <li className="nav-item">
               <NavLink className="nav-link custom-link" to="/realidad">Realidad</NavLink>
             </li>
+
+            {/* ✅ Nuevo link de Iniciar Sesión */}
+            <li className="nav-item">
+              <NavLink className="nav-link custom-link" to="/login">Iniciar Sesión</NavLink>
+            </li>
+
           </ul>
         </div>
       </div>

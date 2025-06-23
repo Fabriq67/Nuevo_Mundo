@@ -1,12 +1,12 @@
 const mysql = require('mysql2');
-require('dotenv').config();
+// require('dotenv').config(); // Opcional: no usar .env si quieres forzar local
 
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT
+  host: 'localhost',      // 👉 Forzado a local
+  user: 'root',
+  password: 'root',
+  database: 'enciclopedia_chugchilan',
+  port: 3306
 });
 
 module.exports = db;

@@ -6,14 +6,21 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function Cultura() {
   const [personas, setPersonas] = useState([]);
+  const [fichas, setFichas] = useState([]);
   const [seleccionado, setSeleccionado] = useState(null);
   const [historiaIA, setHistoriaIA] = useState('');
   const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
+    // Traer PERSONAS
     axios.get(`${API_BASE_URL}/api/personas`)
       .then(res => setPersonas(res.data))
       .catch(err => console.error('❌ Error al cargar personas:', err));
+
+    // Traer FICHAS CULTURALES
+    axios.get(`${API_BASE_URL}/api/fichas?tipo=cultura`)
+      .then(res => setFichas(res.data))
+      .catch(err => console.error('❌ Error al cargar fichas:', err));
   }, []);
 
   const generarHistoriaIA = async () => {
@@ -40,7 +47,9 @@ function Cultura() {
     <div className="container mt-5 text-light">
       <h2 className="text-center text-danger mb-5 border-bottom pb-2">☀ Códice Cultural ☀</h2>
 
-      <div className="row g-4">
+      {/* 📜 Sección de PERSONAS */}
+      <h4 className="text-info">Personas y relatos IA</h4>
+      <div className="row g-4 mb-5">
         {personas.map(p => (
           <div key={p.id} className="col-md-4">
             <div
@@ -67,6 +76,32 @@ function Cultura() {
         ))}
       </div>
 
+      {/* 📜 Sección de FICHAS CULTURALES */}
+      <h4 className="text-info">Fichas culturales registradas</h4>
+      <div className="row g-4">
+        {fichas.length === 0 ? (
+          <p>No hay fichas culturales aún.</p>
+        ) : (
+          fichas.map(f => (
+            <div key={f.id} className="col-md-4">
+              <div className="card bg-dark text-white h-100 shadow-lg border border-success">
+                <img
+                  src={`${API_BASE_URL}/${f.imagen_url}`}
+                  className="card-img-top"
+                  alt={f.titulo}
+                  style={{ height: '230px', objectFit: 'cover' }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title text-success">{f.titulo}</h5>
+                  <p className="card-text">{f.descripcion?.substring(0, 100)}...</p>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Modal de Persona + Historia IA */}
       {seleccionado && (
         <div className="modal-ficha">
           <div className="modal-content-ficha">
